@@ -122,7 +122,7 @@ El repositorio se creó durante la realización del ejercicio 2. He creado un ar
 
 Creé un archivo de pruebas con dos ejemplos que testeaban cada función. Comenté las aserciones correspondientes a la función *getReversed()*. El fichero se puede ver en la imagen que viene abajo:
 
-![Archivo de pruebas](/docs/imgs/tema-2/tests-asserts.png?raw=true)
+![Archivo de pruebas](/docs/imgs/tema-2/test-asserts.png?raw=true)
 
 Modifiqué el archivo *package.json* para que ejecutara el archivo antes mencionado:
 
