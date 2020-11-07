@@ -8,7 +8,7 @@ Para instalar docker he utilizado [este tutorial](https://docs.docker.com/engine
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 ```
 
-Configuro el repositorio correspondiente para usar versiones estable:
+Configuro el repositorio correspondiente para usar versiones estables:
 
 ```
 sudo add-apt-repository \
@@ -23,7 +23,7 @@ Actualizo el índice de paquetes de apt.
 sudo apt-get update
 ```
 
-E instalo las versiones recientes de Docker Engine y containerd.
+E instalo Docker Engine y containerd.
 
 ```
 sudo apt-get install docker-ce docker-ce-cli containerd.io
@@ -34,6 +34,7 @@ Se puede verificar si se ha instalado correctamente mediante este comando:
 ```
 sudo docker run hello-world
 ```
+
 ![Ejecución de hello world](imgs/tema-3/docker-sudo-hello-world.png)
 
 Para poder ejecutar docker sin sudo hay que añadir el usuario al grupo docker.
@@ -42,7 +43,7 @@ Para poder ejecutar docker sin sudo hay que añadir el usuario al grupo docker.
 sudo usermod -aG docker ${USER}
 ```
 
-En [este tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04-es) encontré una solución para no tener que cerrar e iniciar la sesión para que se aplique el cambio.
+En [este tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04-es) encontré una solución para no tener que cerrar e iniciar sesión para que se aplique el cambio.
 
 ```
 su - ${USER}
