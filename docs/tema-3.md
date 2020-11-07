@@ -54,7 +54,7 @@ Mediante el siguiente comando se puede comprobar si se está en el grupo docker:
 id -nG
 ```
 
-![Comando id](img/tema-3/comando-id.png)
+![Comando id](imgs/tema-3/comando-id.png)
 
 
 Ahora se puede ejecutar el comando sin sudo:
@@ -63,7 +63,7 @@ Ahora se puede ejecutar el comando sin sudo:
 docker run hello-world
 ```
 
-![hello-world de Docker](imgs/tema-3/docker-hello-wold.png)
+![Ejecución de hello-world sin sudo](imgs/tema-3/docker-hello-world.png)
 
 Para realizar otra prueba voy a ejecutar el comando:
 
