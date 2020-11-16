@@ -164,3 +164,140 @@ He creado un volumen y lo he usado en un contenedor.
 Después he mirado los detalles del volumen para ver cómo se podía acceder a los datos y visualicé el fichero correspondiente.
 
 ![Fedora volumen 2](imgs/tema-3/docker-vol-2.png)
+
+## Ejercicio 6. Usar un miniframework REST para crear un servicio web y introducirlo en un contenedor, y componerlo con un cliente REST que sea el que finalmente se ejecuta y sirve como “frontend”.
+
+Creé un contenedor para el back end usando Python y flask-restful. En el código fuente tuve que importar también flask_cors, un módulo que añade a las cabeceras de las respuestas una entrada que permite en el navegador el intercambio de recursos de origen cruzado. El código es el siguiente:
+
+```
+from flask import Flask
+from flask_restful import Resource, Api
+from flask_cors import CORS
+from datetime import datetime
+
+app = Flask(__name__)
+CORS(app)
+api = Api(app)
+
+
+class Welcome(Resource):
+    def get(self):
+      return {'message': 'Welcome message from back end'}
+
+class User(Resource):
+    def get(self, name):
+        return {'name': name, 'time': datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), 'details': 'Not authorized'}
+
+api.add_resource(Welcome, '/')
+api.add_resource(User, '/user/<string:name>')
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
+```
+
+El front end lo realicé en JavaScript y React con ayuda de [este tutorial](https://mherman.org/blog/dockerizing-a-react-app/).
+
+```
+import './App.css';
+import React from 'react';
+
+class App extends React.Component{
+  constructor(props){
+  	super(props);
+  	this.state = {name: "", time: "", details: ""};
+  	this.send = this.send.bind(this);
+  }
+  
+  send (event){
+    event.preventDefault();
+    var xmlhttp = new XMLHttpRequest();
+    var url = "http://localhost:5000/user/" + document.getElementById('user').value;
+    var that = this;
+    xmlhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+        console.log(this.responseText);
+        var data = JSON.parse(this.responseText);
+	    that.setState(state => ({
+	    	name: data['name'], time: data['time'], details: data['details']
+	    }));
+    }
+    else{
+	    that.setState(state => ({
+	    	name: "Error", time: "Error", details: "Error"
+	    }));
+    }
+    }
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+  
+  render (){ 
+    return(
+      <div className="App">
+          <h2>Welcome</h2>
+          <form onSubmit={this.send}>
+            <label>
+              User you want to check: 
+              <input type="text" id="user" />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+          <div id="result">
+            <p>Name: {this.state.name}</p>
+            <p>Time: {this.state.time}</p>
+            <p>Details: {this.state.details}</p>
+          </div>
+      </div>
+    )
+  }
+}
+
+export default App;
+```
+
+Para el fichero de configuración de docker-compose en el caso del front end me basé también en [el tutorial mencionado anteriormente](https://mherman.org/blog/dockerizing-a-react-app/):
+
+```
+version: '3.7'
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    expose:
+      - "5000"
+    hostname: 'backend'
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - './frontend:/app'
+      - '/app/node_modules'
+    ports:
+      - "3001:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+```
+
+La salida de `docker-compose up` es la siguiente:
+
+![docker-compose up](imgs/tema-3/docker-compose-up.png)
+
+Ejemplos de acceso al back end desde el navegador:
+
+![back end welcome](imgs/tema-3/rest-welcome.png)
+
+![back end user](imgs/tema-3/rest-welcome.png)
+
+Ejemplos de acceso mediante el front end:
+
+![front end 1](imgs/tema-3/rest-frontend-1.png)
+
+![back end user](imgs/tema-3/rest-frontend-2.png)
