@@ -1,6 +1,7 @@
 # Tema 3 - Contenedores y cómo usarlos
 
-## Ejercicio 1. Buscar alguna demo interesante de Docker y ejecutarla localmente, o en su defecto, ejecutar la imagen anterior y ver cómo funciona y los procesos que se llevan a cabo la primera vez que se ejecuta y las siguientes ocasiones.
+## Ejercicio 1
+### Buscar alguna demo interesante de Docker y ejecutarla localmente, o en su defecto, ejecutar la imagen anterior y ver cómo funciona y los procesos que se llevan a cabo la primera vez que se ejecuta y las siguientes ocasiones.
 
 Para instalar docker he utilizado [este tutorial](https://docs.docker.com/engine/install/ubuntu/). Primero añado la clave de GPG del repositorio de Docker mediante el siguiente comando:
 
@@ -81,7 +82,8 @@ En las siguientes ejecución los paquetes están descargados ya y no se vuelven 
 
 ![Octopus primera ejecución](imgs/tema-3/octopus-primera-ejecucion.png)
 
-## Ejercicio 2. Tomar algún programa simple, “Hola mundo” impreso desde el intérprete de línea de órdenes, y comparar el tamaño de las imágenes de diferentes sistemas operativos base, Fedora, CentOS y Alpine, por ejemplo.
+## Ejercicio 2
+### Tomar algún programa simple, “Hola mundo” impreso desde el intérprete de línea de órdenes, y comparar el tamaño de las imágenes de diferentes sistemas operativos base, Fedora, CentOS y Alpine, por ejemplo.
 
 Creé un archivo en Python con una sola línea:
 
@@ -139,13 +141,15 @@ El tamaño de cada contenedor se puede ver aquí:
 
 Como se ve en la imagen, el contenedor que menos pesa es el de Alpine. El de CentOS pesa más y el que más pesa es el de Fedora.
 
-## Ejercicio 3. Crear a partir del contenedor anterior una imagen persistente con commit.
+## Ejercicio 3
+### Crear a partir del contenedor anterior una imagen persistente con commit.
 
 He usado el contenedor de Alpine. Primero miré el identificador del contenedor para después usarlo en el comando commit.
 
 ![Alpine commit](imgs/tema-3/alpine-commit.png)
 
-## Ejercicio 4. Examinar la estructura de capas que se forma al crear imágenes nuevas a partir de contenedores que se hayan estado ejecutando.
+## Ejercicio 4
+### Examinar la estructura de capas que se forma al crear imágenes nuevas a partir de contenedores que se hayan estado ejecutando.
 
 He usado el contenedor de Alpine. Primero instalé jq y posteriormente ejecuté el siguiente comando:
 
@@ -155,7 +159,8 @@ sudo jq '.' /var/lib/docker/image/overlay2/imagedb/content/sha256/ddd9e0c2a1d4d9
 
 ![Alpine capas](imgs/tema-3/alpine-layers.png)
 
-## Ejercicio 5. Crear un volumen y usarlo, por ejemplo, para escribir la salida de un programa determinado.
+## Ejercicio 5
+### Crear un volumen y usarlo, por ejemplo, para escribir la salida de un programa determinado.
 
 He creado un volumen y lo he usado en un contenedor.
 
@@ -165,7 +170,13 @@ Después he mirado los detalles del volumen para ver cómo se podía acceder a l
 
 ![Fedora volumen 2](imgs/tema-3/docker-vol-2.png)
 
-## Ejercicio 6. Usar un miniframework REST para crear un servicio web y introducirlo en un contenedor, y componerlo con un cliente REST que sea el que finalmente se ejecuta y sirve como “frontend”.
+## Ejercicio 6
+### Reproducir los contenedores creados anteriormente usando un Dockerfile.
+
+Los contenedores del ejercicio 2 se han creado con un Dockerfile.
+
+## Ejercicio 7
+### Usar un miniframework REST para crear un servicio web y introducirlo en un contenedor, y componerlo con un cliente REST que sea el que finalmente se ejecuta y sirve como “frontend”.
 
 Creé un contenedor para el back end usando Python y flask-restful. En el código fuente tuve que importar también flask_cors, un módulo que añade a las cabeceras de las respuestas una entrada que permite en el navegador el intercambio de recursos de origen cruzado. El código es el siguiente:
 
