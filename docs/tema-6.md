@@ -75,7 +75,7 @@ Lanzo la aplicación:
 
 ![Ejercicio 2 - running](imgs/tema-6/ejercicio-2-running.png)
 
-En el navegador veo la respuesta de la función:
+En el navegador miro la respuesta de la función:
 
 ![Ejercicio 2 - running](imgs/tema-6/ejercicio-2-respuesta.png)
 
